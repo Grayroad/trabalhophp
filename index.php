@@ -1,9 +1,41 @@
 <?php
+$email = "";
+$senha = "";
+
 if ($_SERVER["REQUEST_METHOD"] == 'POST') {
   $email = $_POST["email"];
   $senha = $_POST["senha"];
-  if (empty($senha)) {
+  if (empty($email) || empty($senha)) {
     $mensagem = "Informe seu e-mail e senha!";
+  } else {
+    require_once('db.class.php');
+
+    //VARIAVEL QUE VERIFICA SE A AUTENTICAÇÃO FOI REALIZADA
+    $usuario_autenticado = false;
+    $usuario_id = null;
+    $usuario_perfil_id = null;
+
+    $sql = "select * from tb_usuario where email='$email' and senha='$senha'";
+    $objDb = new db();
+
+    $linq = $objDb->conecta_mysql();
+    $resultado_id = mysqli_query($linq, $sql);
+    if ($resultado_id) {
+      $dados_usuario = mysqli_fetch_array($resultado_id);
+      if (!is_null($dados_usuario)) {
+
+        session_start();
+
+        $_SESSION['autenticado'] = 'SIM';
+        $_SESSION['id'] = $dados_usuario["id"];
+        $_SESSION['perfil_id'] = $$dados_usuario["perfil_id"];
+        header('Location: home.php');
+      } else {
+        $mensagem = "E-mail/senha inválidos";
+      }
+    } else {
+      $mensagem = 'Erro na conexão com o BD';
+    }
   }
 }
 ?>
