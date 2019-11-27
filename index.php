@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 
         $_SESSION['autenticado'] = 'SIM';
         $_SESSION['id'] = $dados_usuario["id"];
-        $_SESSION['perfil_id'] = $$dados_usuario["perfil_id"];
+        $_SESSION['perfil_id'] = $dados_usuario["perfil_id"];
         header('Location: home.php');
       } else {
         $mensagem = "E-mail/senha inválidos";
