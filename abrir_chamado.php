@@ -95,6 +95,11 @@ if (!isset($resultado)) {
         </div>
       </div>
     </div>
+    <?php if ($_GET["mensagem"] == "1") { ?>
+      <script>
+        alert("Chamado salvo com sucesso");
+      </script>
+    <?php } ?>
 </body>
 
 </html>

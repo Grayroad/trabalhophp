@@ -1,24 +1,20 @@
 <?php
 
-session_start();
-    //Montando o texto
-    $titulo = str_replace('#','-',$_POST['titulo']);
-    $categoria = str_replace('#','-',$_POST['categoria']);
-    $descricao = str_replace('#','-',$_POST['descricao']);
-    //implode('#',$_POST);
+require_once("db.class.php");
+require_once("validador_acesso.php");
+//Montando o texto
 
-    $texto = $_SESSION['id'].'#'.$titulo.'#'.$categoria.'#'.$descricao.PHP_EOL;
-    
-    //http://php.net/manual/pt_BR/function.fopen.php
-    //Abrindo o arquivo
-    $arquivo = fopen('arquivo.hd','a');
+$titulo = $_POST['titulo'];
+$categoria = $_POST['categoria'];
+$descricao = $_POST['descricao'];
+$idUsuario = $_SESSION["id"];
 
-    //Escrevendo texto no arquivo
-    fwrite($arquivo,$texto);
+$sql = "INSERT INTO tb_chamado (idUsuario, idCategoria, titulo, descricao) VALUES ($idUsuario, $categoria, '$titulo', '$descricao');";
 
-    //Fechando o arquivo
-    fclose($arquivo);
+$objDb = new db();
 
-    //echo $texto;
-    header('Location: abrir_chamado.php')
-?>
+$linq = $objDb->conecta_mysql();
+$resultado_id = mysqli_query($linq, $sql);
+
+//echo $texto;
+header('Location: abrir_chamado.php?mensagem=1');
