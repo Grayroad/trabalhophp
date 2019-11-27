@@ -59,7 +59,7 @@ if (!isset($resultado)) {
                 <form method="POST" action="registra_chamado.php">
                   <div class="form-group">
                     <label>Título</label>
-                    <input name="titulo" type="text" class="form-control" placeholder="Título">
+                    <input name="titulo" type="text" class="form-control" placeholder="Título" required>
                   </div>
 
                   <div class="form-group">
